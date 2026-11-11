@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f3c344"><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/icon-192.png"><link rel="stylesheet" href="/style.css?v=pin-keypad-7"><title>Golden Gate · Recepción</title></head><body>
+<section id="login"><aside class="cover"><div class="brand">◈ &nbsp; Golden Gate</div><div class="arch"><i></i><i></i><i></i></div><div class="caption">Panel de recepción</div></aside><form id="access"><small>RECEPCIÓN</small><h1>Iniciar sesión</h1><label>Usuario<input name="name" required autocomplete="username"></label><fieldset class="pin-panel"><legend>Ingresa tu PIN de 6 números</legend>
+<input id="pinValue" name="password" type="hidden">
+<div id="pinDots" class="pin-dots" role="img" aria-label="0 de 6 números ingresados"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<div id="pinKeys" class="pin-keys"><button type="button" data-digit="1">1</button><button type="button" data-digit="2">2</button><button type="button" data-digit="3">3</button><button type="button" data-digit="4">4</button><button type="button" data-digit="5">5</button><button type="button" data-digit="6">6</button><button type="button" data-digit="7">7</button><button type="button" data-digit="8">8</button><button type="button" data-digit="9">9</button><button type="button" data-pin-action="clear" class="pin-action">Limpiar</button><button type="button" data-digit="0">0</button><button type="button" data-pin-action="back" class="pin-action" aria-label="Borrar último número">⌫</button></div></fieldset><p class="error" id="loginError" role="alert"></p><button class="primary">Entrar a recepción →</button></form></section>
+<div id="app" hidden><header><div class="brand">◈ &nbsp; Golden Gate</div><nav><button id="board">Habitaciones</button><button id="history">Historial</button></nav><button id="logout">Salir</button></header><main><small>PANEL DE RECEPCIÓN</small><h1 id="title"></h1><div class="sub"><span id="date"></span><span id="sync" role="status"></span></div><div class="notice-controls"><button id="enableAlerts" hidden>Activar notificaciones</button><span id="alertStatus"></span></div><section id="expired" role="status" aria-live="polite"></section><p id="receipt" role="status" hidden></p><div id="content"></div></main></div>
+<dialog id="modal" aria-labelledby="roomTitle"><form id="stay">
+<div class="row"><small>REGISTRAR ENTRADA</small><button type="button" id="close" aria-label="Cerrar">×</button></div>
+<h2 id="roomTitle"></h2><p id="current"></p>
+<button type="button" id="completeStay" class="primary" hidden>Hora concluida</button>
+<p id="completeError" class="error" role="alert"></p>
+<details id="emergencyEdit" hidden><summary>Editar fecha y hora por emergencia</summary>
+<label>Entrada<input type="datetime-local" id="editStart"></label>
+<label>Salida<input type="datetime-local" id="editEnd"></label>
+<label>Motivo del cambio<textarea id="editReason" maxlength="500" rows="2"></textarea></label>
+<button type="button" id="saveEdit" class="primary">Guardar cambio</button><p id="editError" class="error" role="alert"></p></details>
+<dl id="stayTimes" hidden>
+  <div><dt>Entrada</dt><dd id="actualStart"></dd></div>
+  <div><dt>Salida prevista</dt><dd id="actualEnd"></dd></div>
+</dl>
+<details id="withdraw" hidden><summary>Retirar registro</summary>
+<label>Motivo del retiro<textarea id="reason" rows="3" maxlength="500"></textarea></label>
+<button type="button" id="confirmWithdraw">Confirmar retiro</button>
+<p id="withdrawError" class="error" role="alert"></p></details>
+<details id="schedule"><summary>Cambiar hora de entrada</summary>
+<div class="picker">
+<b>Día de entrada</b>
+<div class="day-options" aria-label="Día de entrada">
+<button type="button" data-day="0">Hoy</button>
+<button type="button" data-day="1">Mañana</button>
+<button type="button" id="otherDay">Otra fecha</button>
+</div>
+<input type="date" id="entryDay" aria-label="Otra fecha de entrada" hidden>
+<b>Hora de entrada · Huancayo-Chupaca</b>
+<div class="clock-adjust" data-clock="entry"><button type="button" data-minutes="-60">−1 h</button><button type="button" data-minutes="-15">−15 min</button><button type="button" data-minutes="-1">−1 min</button><button type="button" data-minutes="1">+1 min</button><button type="button" data-minutes="15">+15 min</button><button type="button" data-minutes="60">+1 h</button></div>
+<output id="chosenTime" aria-live="polite"></output>
+</div></details>
+<label>Detalles de la entrada (opcional)<textarea id="entryDetails" rows="3" maxlength="2000" placeholder="Ej. alojamiento por trabajo, acuerdos de la estancia…"></textarea></label><p id="savedDetails"></p><div class="durations">
+<button type="submit" value="3"><b>Registrar 3 horas</b><span>Momentáneo</span><em></em></button>
+<button type="submit" value="12"><b>Registrar 12 horas</b><span>Completa</span><em></em></button>
+<button type="submit" value="month"><b>Registrar 1 mes</b><span>Mes calendario</span><em></em></button></div>
+<details id="otherDuration"><summary>Otro · Elegir cantidad de días</summary>
+<div class="day-counter"><button type="button" id="lessDays">−</button><label>Días<input id="stayDays" type="number" min="1" max="36500" step="1" value="1"></label><button type="button" id="moreDays">+</button></div>
+<div class="durations"><button type="submit" value="days"><b>Registrar por días</b><span id="dayQuantity">1 día</span><em></em></button></div></details>
+<details id="customExit"><summary>Elegir hora de salida</summary>
+<label>Día de salida · Huancayo-Chupaca<input type="date" id="exitDate"></label><output id="exitClock"></output><div class="clock-adjust" data-clock="exit"><button type="button" data-minutes="-60">−1 h</button><button type="button" data-minutes="-15">−15 min</button><button type="button" data-minutes="-1">−1 min</button><button type="button" data-minutes="1">+1 min</button><button type="button" data-minutes="15">+15 min</button><button type="button" data-minutes="60">+1 h</button></div>
+<button type="button" id="nearExit">Salida en 2 minutos</button>
+<p id="exitHint"></p><button type="submit" id="saveExit" value="custom" class="primary" formnovalidate>Registrar con esta salida</button>
+</details><p class="error" id="stayError" role="alert"></p>
+</form></dialog><script src="/app.js"></script></body></html>

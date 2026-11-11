@@ -1,0 +1,9 @@
+{
+  "name":"golden-gate-recepcion",
+  "version":"1.0.0",
+  "private":true,
+  "scripts":{"start":"python servidor.py","android":"cap open android","ios":"cap open ios"},
+  "dependencies":{"@capacitor/core":"^7.0.0","@capacitor/android":"^7.0.0","@capacitor/ios":"^7.0.0"},
+  "devDependencies":{"typescript":"^5.0.0","@capacitor/cli":"^7.0.0"}
+}
+

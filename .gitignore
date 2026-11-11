@@ -1,0 +1,8 @@
+__pycache__/
+*.sqlite3*
+node_modules/
+android/.gradle/
+android/local.properties
+android/**/build/
+ios/App/Pods/
+
